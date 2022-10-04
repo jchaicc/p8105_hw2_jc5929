@@ -108,6 +108,11 @@ pols_month=read_csv("data/pols-month.csv") %>%
                       `11`='November',`12`='December'))%>%
   mutate(president=ifelse(prez_dem<1,'gop','dem')) %>%
   select(-day,-prez_gop,-prez_dem)
+
+snp=read_csv("data/snp.csv") %>%
+  separate(date,into=c('month','day','year'),sep='/') %>%
+  select(-day) %>%
+  select(year,month,everything())
                       
 ```
 
