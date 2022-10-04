@@ -81,7 +81,8 @@ trash_wheel=readxl::read_excel("data/Trash-Wheel-Collection-Totals-7-2020-2.xlsx
   janitor::clean_names() %>%
   drop_na(dumpster) %>%
   mutate(sports_balls=round(sports_balls,0),
-         sports_balls=as.integer(sports_balls))
+         sports_balls=as.integer(sports_balls)) %>%
+  mutate(trash_wheel_type="mr")
 ```
 
 ```{r}
@@ -90,7 +91,15 @@ prof_trash_wheel=readxl::read_excel("data/Trash-Wheel-Collection-Totals-7-2020-2
   janitor::clean_names() %>%
   drop_na(dumpster) %>%
   mutate(sports_balls=round(sports_balls,0),
-         sports_balls=as.integer(sports_balls))voew
+         sports_balls=as.integer(sports_balls)) %>%
+  mutate(trash_wheel_type="prof") %>%
+  mutate(dumpster=as.character(dumpster))
+
+  sum_trash=bind_rows(trash_wheel,prof_trash_wheel)
   
+```
+
+```{r q3}
+
 
 ```
