@@ -76,8 +76,8 @@ nyc_transit_long %>%
 There are 60 different stations serve A train, and 17 of them are ada compliant.
 
 ```{r q2}
-trash_wheel=readxl::read_excel("data/Trash-Wheel-Collection-Totals-7-2020-2.xlsx",
-                       sheet=1,range="A2:N535") %>%
+trash_wheel=readxl::read_excel("data/Trash Wheel Collection Data.xlsx",
+                       sheet=1,range="A2:N550") %>%
   janitor::clean_names() %>%
   drop_na(dumpster) %>%
   mutate(sports_balls=round(sports_balls,0),
@@ -86,18 +86,27 @@ trash_wheel=readxl::read_excel("data/Trash-Wheel-Collection-Totals-7-2020-2.xlsx
 ```
 
 ```{r}
-prof_trash_wheel=readxl::read_excel("data/Trash-Wheel-Collection-Totals-7-2020-2.xlsx",
-                                    sheet=2, range="A2:N117") %>%
+prof_trash_wheel=readxl::read_excel("data/Trash Wheel Collection Data.xlsx",
+                                    sheet=2, range="A2:M97") %>%
   janitor::clean_names() %>%
   drop_na(dumpster) %>%
-  mutate(sports_balls=round(sports_balls,0),
-         sports_balls=as.integer(sports_balls)) %>%
+  mutate(sports_balls=0) %>%
   mutate(trash_wheel_type="prof") %>%
-  mutate(dumpster=as.character(dumpster))
+  select(dumpster:chip_bags,sports_balls,homes_powered,trash_wheel_type) %>%
+  mutate(dumpster=as.integer(dumpster),year=as.character(year)) 
+  
+sum_trash=bind_rows(trash_wheel,prof_trash_wheel)
 
-  sum_trash=bind_rows(trash_wheel,prof_trash_wheel)
+  
   
 ```
+
+```{r}
+  sum(prof_trash_wheel$weight_tons)
+  sum(trash_wheel$sports_balls)
+
+```
+
 
 ```{r q3}
 pols_month=read_csv("data/pols-month.csv") %>%
@@ -112,15 +121,23 @@ pols_month=read_csv("data/pols-month.csv") %>%
 snp=read_csv("data/snp.csv") %>%
   separate(date,into=c('month','day','year'),sep='/') %>%
   select(-day) %>%
-  select(year,month,everything())
+  select(year,month,everything()) %>%
+  mutate(month=recode(month,`4`='April',`1`='January',`2`='February',
+                      `3`='March',`5`='May',`6`='June',`7`='July',
+                      `8`='August',`9`='September',`10`='October',
+                      `11`='November',`12`='December'))
 
 unemploy=read_csv("data/unemployment.csv") %>%
   
   pivot_longer(Jan:Dec,
                names_to='month',
                values_to='amount') %>%
-  plyr::rename(c("Year"="year"))
-  
+  plyr::rename(c("Year"="year"))  %>%
+  mutate(year=as.character(year))
+
+
+ps_data=left_join(pols_month,snp)
+sum_data=left_join(ps_data,unemploy)  
   
   
                       
