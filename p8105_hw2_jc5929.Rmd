@@ -100,6 +100,16 @@ prof_trash_wheel=readxl::read_excel("data/Trash-Wheel-Collection-Totals-7-2020-2
 ```
 
 ```{r q3}
-
-
+pols_month=read_csv("data/pols-month.csv") %>%
+  separate(mon,into=c('year','month','day'),sep='-') %>%
+  mutate(month=recode(month,`04`='April',`01`='January',`02`='February',
+                      `03`='March',`05`='May',`06`='June',`07`='July',
+                      `08`='August',`09`='September',`10`='October',
+                      `11`='November',`12`='December'))%>%
+  mutate(president=ifelse(prez_dem<1,'gop','dem')) %>%
+  select(-day,-prez_gop,-prez_dem)
+                      
 ```
+
+str(pols_month)
+
