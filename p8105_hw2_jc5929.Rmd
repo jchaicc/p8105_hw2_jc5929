@@ -113,6 +113,16 @@ snp=read_csv("data/snp.csv") %>%
   separate(date,into=c('month','day','year'),sep='/') %>%
   select(-day) %>%
   select(year,month,everything())
+
+unemploy=read_csv("data/unemployment.csv") %>%
+  
+  pivot_longer(Jan:Dec,
+               names_to='month',
+               values_to='amount') %>%
+  plyr::rename(c("Year"="year"))
+  
+  
+  
                       
 ```
 
