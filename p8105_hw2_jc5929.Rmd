@@ -37,3 +37,20 @@ Next, I used the *select* function to select the specific columns that I want.
 And then used the *mutate* function to change the entry variable from characrer 
 to logical variables.
 
+```{r}
+dis=distinct(nyc_transit,line,station_name,.keep_all=TRUE)
+nrow(dis)
+dis %>%
+  filter(ada=='TRUE')
+```
+
+```{r}
+dis %>%
+  filter(vending=='NO')%>%
+  filter(entry=='TRUE')
+```
+
+There are 465 dstinct stations. And 84 stations are ada compliant. There are 9 
+stations that does not have vending machine, and 5 of them allows entry. 
+Therefore, 5/9 station entrances / exits without vending allow entrance.
+
