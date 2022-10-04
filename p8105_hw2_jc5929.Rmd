@@ -9,7 +9,7 @@ date: "2022-10-04"
 library(tidyverse)
 library(dplyr)
 library(knitr)
-  nyc_transit=read_csv("data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv") %>%
+  nyc_transit=read_csv("data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv",show_col_types = FALSE) %>%
   janitor::clean_names() %>%
   select(line,station_name,station_latitude,
          station_longitude,route1:route11,
@@ -53,4 +53,16 @@ dis %>%
 There are 465 dstinct stations. And 84 stations are ada compliant. There are 9 
 stations that does not have vending machine, and 5 of them allows entry. 
 Therefore, 5/9 station entrances / exits without vending allow entrance.
+
+```{r}
+nyc_transit %>%
+   pivot_longer(route1:route11,
+                names_to='route_number',
+                values_to='route_name',
+                values_transform = as.character,
+                names_transform = as.character)
+
+                
+
+```
 
