@@ -7,4 +7,20 @@ date: "2022-10-04"
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+library(tidyverse)
+```{r}
+  nyc_transit=read_csv("data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv") %>%
+  janitor::clean_names() %>%
+  select(line,station_name,station_latitude,
+         station_longitude,route1:route11,
+         entry,vending,entrance_type,ada) %>%
+  mutate(entry=recode(entry,'YES'='TRUE','NO'='FALSE'))
 
+```
+
+```{r, eval=FALSE}
+nrow(nyc_transit)
+ncol(nyc_transit)
+```
+
+This dataset contains variables: line, station name, station latitude, station longitude,
