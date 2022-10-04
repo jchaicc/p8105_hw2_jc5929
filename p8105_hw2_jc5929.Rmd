@@ -4,11 +4,11 @@ output: github_document
 date: "2022-10-04"
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-library(tidyverse)
+
 ```{r}
+library(tidyverse)
+library(dplyr)
+library(knitr)
   nyc_transit=read_csv("data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv") %>%
   janitor::clean_names() %>%
   select(line,station_name,station_latitude,
@@ -23,4 +23,17 @@ nrow(nyc_transit)
 ncol(nyc_transit)
 ```
 
-This dataset contains variables: line, station name, station latitude, station longitude,
+This dataset contains variables: line, station name, station latitude, station
+longitude,
+and the routes number from route1 to route11, the entry, vending, entrance type, 
+and also ADA compliance. It has 1868 rows, and 19 columns.
+
+I used the function *clean_names* from the package *janitor* to clean the 
+variables 
+names in the dataset. This step includes formatting the characters from upper 
+case 
+letters into lower case letters, and also added underlines.
+Next, I used the *select* function to select the specific columns that I want. 
+And then used the *mutate* function to change the entry variable from characrer 
+to logical variables.
+
