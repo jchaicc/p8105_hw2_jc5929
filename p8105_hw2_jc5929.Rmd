@@ -55,14 +55,18 @@ stations that does not have vending machine, and 5 of them allows entry.
 Therefore, 5/9 station entrances / exits without vending allow entrance.
 
 ```{r}
-nyc_transit %>%
-   pivot_longer(route1:route11,
+nyc_transit_long =
+   pivot_longer(nyc_transit,
+                route1:route11,
                 names_to='route_number',
                 values_to='route_name',
                 values_transform = as.character,
                 names_transform = as.character)
-
-                
+nyc_transit_long %>%
+  distinct(line,station_name,.keep_all=TRUE) %>%
+  filter(route_name=='A')%>%
+  filter(ada=='TRUE')
+  
 
 ```
 
