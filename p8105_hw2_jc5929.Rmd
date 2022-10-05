@@ -84,7 +84,7 @@ trash_wheel=readxl::read_excel("data/Trash Wheel Collection Data.xlsx",
          sports_balls=as.integer(sports_balls)) %>%
   mutate(trash_wheel_type="mr")
 ```
-
+#filter(!is.na(dumpster))
 ```{r}
 prof_trash_wheel=readxl::read_excel("data/Trash Wheel Collection Data.xlsx",
                                     sheet=2, range="A2:M97") %>%
@@ -103,7 +103,8 @@ sum_trash=bind_rows(trash_wheel,prof_trash_wheel)
 
 ```{r}
   sum(prof_trash_wheel$weight_tons)
-  sum(trash_wheel$sports_balls)
+  data=filter(trash_wheel,year==2020)
+  sum(data$sports_balls)
 
 ```
 
@@ -136,6 +137,10 @@ unemploy=read_csv("data/unemployment.csv") %>%
                names_to='month',
                values_to='amount') %>%
   plyr::rename(c("Year"="year"))  %>%
+  mutate(month=recode(month,'Apr'='April','Jan'='January','Feb'='February',
+                      'Mar'='March','May'='May','Jun'='June','Jul'='July',
+                      'Aug'='August','Sep'='September','Oct'='October',
+                      'Nov'='November','Dec'='December')) %>%
   mutate(year=as.integer(year))
 
 
@@ -146,5 +151,4 @@ sum_data=left_join(ps_data,unemploy)
                       
 ```
 
-str(pols_month)
 
