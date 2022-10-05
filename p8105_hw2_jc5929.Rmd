@@ -107,7 +107,6 @@ sum_trash=bind_rows(trash_wheel,prof_trash_wheel)
 
 ```
 
-
 ```{r q3}
 pols_month=read_csv("data/pols-month.csv") %>%
   separate(mon,into=c('year','month','day'),sep='-') %>%
@@ -116,10 +115,13 @@ pols_month=read_csv("data/pols-month.csv") %>%
                       `08`='August',`09`='September',`10`='October',
                       `11`='November',`12`='December'))%>%
   mutate(president=ifelse(prez_dem<1,'gop','dem')) %>%
+  mutate(year=as.integer(year)) %>%
   select(-day,-prez_gop,-prez_dem)
 
-snp=read_csv("data/snp.csv") %>%
+snp=read_csv("data/snp.csv") %>% 
   separate(date,into=c('month','day','year'),sep='/') %>%
+  mutate(year=as.integer(year)) %>%
+  mutate(year=ifelse(year<20,year+2000,year+1900)) %>%
   select(-day) %>%
   select(year,month,everything()) %>%
   mutate(month=recode(month,`4`='April',`1`='January',`2`='February',
@@ -127,13 +129,14 @@ snp=read_csv("data/snp.csv") %>%
                       `8`='August',`9`='September',`10`='October',
                       `11`='November',`12`='December'))
 
+
 unemploy=read_csv("data/unemployment.csv") %>%
   
   pivot_longer(Jan:Dec,
                names_to='month',
                values_to='amount') %>%
   plyr::rename(c("Year"="year"))  %>%
-  mutate(year=as.character(year))
+  mutate(year=as.integer(year))
 
 
 ps_data=left_join(pols_month,snp)
