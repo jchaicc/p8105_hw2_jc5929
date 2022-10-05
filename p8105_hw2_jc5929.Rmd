@@ -173,15 +173,15 @@ associated date. The range of the time frame starts from 1947 Janurary to 2015
 June. Moreover, the dataset also contains a column indicating whether the 
 president is from dem or gop. 
 
-The snp dataset has `r nrow(snp)` observations and `r ncol(snp)`columns. It
+The snp dataset has `r nrow(snp)` observations and `r ncol(snp)` columns. It
 contains the closing value of the S&P stock on the date of observation.
 
 The unemploy dataset has `r nrow(unemploy)` observations and `r ncol(unemploy)` 
 columns. The dataset indicates the unemployment rate on each month of the 
 associated year.
 
-The final dataset sum_data is after joing the above three dataset. It has 
-`r nrow(sum_data)`observations, and `r ncol(sum_data)`columns. The range of 
+The final dataset sum_data is after joining the above three dataset. It has 
+`r nrow(sum_data)` observations, and `r ncol(sum_data)`columns. The range of 
 years is from 1947 to 2015. Key variables includes, president, rep_dem, sen_dem,
 gov_dem, rep_gop, sen_gop, gov_gop. 
 
