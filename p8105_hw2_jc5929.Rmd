@@ -84,6 +84,7 @@ trash_wheel=readxl::read_excel("data/Trash Wheel Collection Data.xlsx",
   mutate(sports_balls=round(sports_balls,0),
          sports_balls=as.integer(sports_balls)) %>%
   mutate(trash_wheel_type="mr")
+
 ```
 
 ```{r}
@@ -95,8 +96,10 @@ prof_trash_wheel=readxl::read_excel("data/Trash Wheel Collection Data.xlsx",
   mutate(trash_wheel_type="prof") %>%
   select(dumpster:chip_bags,sports_balls,homes_powered,trash_wheel_type) %>%
   mutate(dumpster=as.integer(dumpster),year=as.character(year)) 
+
   
 sum_trash=bind_rows(trash_wheel,prof_trash_wheel)
+sum_trash
 
   
   
@@ -112,9 +115,11 @@ The sum_trash dataset which combines both the trash_wheel dataset and the
 prof_trash_wheel dataset. It has `r nrow(sum_trash)`observations, and 
 `r ncol(sum_trash)` columns. Some key variables includes the weight_tons, 
 plastic_bottles, polystyrene, cigarette_butts, glass_bottles, grocery_bags, 
-chip_bags,sports_balls, which gave a category of the trash. The total weight of
-trash produced by professor trash wheel is 190.12 tons, and number of sports 
-balls collected by Mr.Trash Wheel in 2020 is 856.
+chip_bags,sports_balls, which gave a category of the trash. There is also a 
+varibale called trash_wheel_type, which can be known it is from Mr.wheel trash
+or professor wheel trash.The total weight of trash produced by professor trash 
+wheel is 190.12 tons, and number of sports balls collected by Mr.Trash 
+Wheel in 2020 is 856.
 
 **Question 3**
 ```{r q3, message=FALSE}
@@ -154,22 +159,25 @@ unemploy=read_csv("data/unemployment.csv") %>%
 
 
 ps_data=left_join(pols_month,snp)
-sum_data=left_join(ps_data,unemploy)  
+sum_data=left_join(ps_data,unemploy) 
+sum_data
   
   
                       
 ```
-The pols_month dataset contains the number of the republican governors, 
-republican senators, republican representatives, and also the number of 
+The pols_month dataset has `r nrow(pols_month)` observations and 
+`r ncol(pols_month)` columns. It contains the number of the republican 
+governors, republican senators, republican representatives, and also the number of 
 democratic governors, democratic governors, democratic representatives on the 
-associated date. The range of the timeframe starts from 1947 Janurary to 2015 
+associated date. The range of the time frame starts from 1947 Janurary to 2015 
 June. Moreover, the dataset also contains a column indicating whether the 
 president is from dem or gop. 
 
-The snp dataset contains the closing value of the S&P stock on the date of 
-observation.
+The snp dataset has `r nrow(snp)` observations and `r ncol(snp)`columns. It
+contains the closing value of the S&P stock on the date of observation.
 
-The unemploy dataset indicates the unemployment rate on each month of the 
+The unemploy dataset has `r nrow(unemploy)` observations and `r ncol(unemploy)` 
+columns. The dataset indicates the unemployment rate on each month of the 
 associated year.
 
 The final dataset sum_data is after joing the above three dataset. It has 
